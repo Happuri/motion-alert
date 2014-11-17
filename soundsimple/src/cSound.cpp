@@ -23,7 +23,7 @@ cSound::~cSound() {
 void cSound::ProccessRecording(const sf::Int16* Samples, std::size_t SamplesCount, unsigned int SampleRate) {
 	//cout << "Processing chunk of size " << SamplesCount << endl;
 	//_fact("Proccessing recording");
-	//_info(*Samples << " , count " << SamplesCount);
+	_info(*Samples << " , count " << SamplesCount << ", " << SampleRate);
 	//unsigned int SampleRate = GetSampleRate();
 
 	// Convert input array to double
