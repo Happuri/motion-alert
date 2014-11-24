@@ -159,7 +159,7 @@ void cSound::ProccessRecording(const sf::Int16* Samples, std::size_t SamplesCoun
 
 int cSound::Interpret(const std::vector<double> &mag, unsigned int SampleRate, size_t N) {
 	int confLvl = 0;
-
+	//_mark("date: " << currentDateTime() << " " );
 	const auto range1 = Check(mag, 550, 1200, SampleRate, N);
 	if (IsInRange(range1->max, 0.85, 1.)) {
 		confLvl+=3;
