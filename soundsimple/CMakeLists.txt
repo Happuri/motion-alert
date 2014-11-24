@@ -7,7 +7,7 @@ set(Boost_LIBRARIES "${Boost_LIBRARIES}")
 find_library(SFML REQUIRED COMPONENTS system window audio)
 find_library(FFTW3_LIBRARIES NAMES fftw3 libfftw3)
 
-option(BUILD_TESTS "Build the unit tests." ON)
+option(BUILD_TESTS "Build the unit tests." OFF)
 
 
 
@@ -27,9 +27,9 @@ endif()
 execute_process(COMMAND git "submodule" "update" "--init" "--recursive")
 
 
-add_subdirectory(tests)
-
-
-add_subdirectory(deps)
 add_subdirectory(src)
 
+if(BUILD_TESTS)
+	add_subdirectory(deps)
+	add_subdirectory(tests)
+endif()
