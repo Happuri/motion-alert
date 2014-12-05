@@ -1,21 +1,20 @@
 #!/bin/bash 
 
-
-# usage ./send <message> 
 set -x
 via=$1
 mess=$2 
 file=$3
 
+echo $# $@
+echo -e "$via \n  "$mess" \n  $file"
 
-source $HOME/motion-alert/soundsimple/scripts/sendXMPP.sh
-source $HOME/motion-alert/soundsimple/scripts/send-mail.sh
+path=$HOME/motion-alert/soundsimple/scripts
+source $path/send-mail.sh
 
 echo $mess
 
 if [[ $via == "xmpp"  ]]; then 
-    sendXMPPInLoop "$mess"
+    eval  $path/send-xmpp.sh   "\"$mess\""
 elif [[ $via == "mail" ]]; then
-    sign $file 
-    send "$mess" $file
+    sign recordings/$file " \" $mess \""
 fi
