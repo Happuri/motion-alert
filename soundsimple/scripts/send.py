@@ -28,17 +28,24 @@ def getPackedFilename(filename) :
 	return packed
 
 
-def waitForFile(packedFile) :
+def waitForFile(packedFile, filename) :
 	#exist = True
 	exist = False
 	print "waiting for " + packedFile
 	logging.info("waiting for " + packedFile)
 
+	i = 0
 	while exist == False : 
 		exist = os.path.isfile(packedFile)
-		print "sleep"
+		#print "sleep"
 		time.sleep(2) 
-	logging.info("found " + packedFile)
+		i = i + 1 
+		if i > 10 : 
+			logging.info("Aborting")
+			return filename
+			break
+	logging.info("found " + packedFile) 
+	return packadFile
 
 def sendMail(message, filename) :
 	command = "$HOME/PyMailSender/sendmail.py ALARM " + " \"" + message + "\" " + filename 
@@ -65,10 +72,11 @@ if sys.argv[1] == "mail" :
 	packedFile = getPackedFilename(filename)
 	logging.info(" file:" + filename + " packed:" + packedFile)
 	sign(filename) 
-	waitForFile(packedFile) 
-	sendMail(message, packedFile)
-
-	getPackedFilename(sys.argv[3]) 
+	
+	filetosend = waitForFile(packedFile, filename) 
+	sendMail(message, filetosend)
+	#sendMail(message, filename)
+	#getPackedFilename(sys.argv[3]) 
 elif sys.argv[1] == "xmpp" : 
 	sendXMPP(message) 
 else :
